@@ -1,0 +1,206 @@
+{% if section.settings.enable_tabs %}
+  <section class="section section-{{section.id}}">
+    <div class="tab_container">
+      {% for block in section.blocks %}
+        {% assign tab_label = block.settings.title | remove:" " | remove:"&" | downcase %}
+        {% if forloop.index != 1 %}
+          {% style %}
+              .tab{
+                display:none;
+              }
+          {% endstyle %}
+        {% endif %}
+        <div class="product_tabs" id="tab-{{tab_label}}" onClick="showHideTabs('{{tab_label}}')">
+          {{ block.settings.title }}
+        </div>
+      {% endfor %}
+      {% for block in section.blocks %}
+        {% assign tab_label = block.settings.title | remove:" " | remove:"&" | downcase %}
+        {% if forloop.index == 1 %}
+          {% style %}
+              .tab-{{tab_label}}{
+                display:block;
+              }
+          {% endstyle %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <script>
+
+  function showHideTabs(arg){
+    $(`.tab`).css('display','none')
+    $(`.tab-${arg}`).show()
+  }
+
+  </script>
+
+  {% style %}
+
+  .section-{{section.id}}{
+    padding-bottom:0px !important;
+    margin-bottom:0px !important;
+  }
+
+  .tab_container{
+    margin: 20px auto;
+    margin-bottom:0px;
+    display:flex;
+    padding-bottom:{{section.settings.border_padding}}px;
+    border-bottom:{{section.settings.border_thickness}}px solid {{section.settings.border_color}};
+  }
+
+
+  .product_tabs{
+    margin-right:2px;
+    padding:0 10px;
+    padding-top:4px;
+    padding-bottom:3px;
+    min-width:130px;
+    background-color: {{section.settings.background_color}};
+    color:{{section.settings.font_color}};
+    border-top-right-radius:{{section.settings.border_radius}}px;
+    border-top-left-radius:{{section.settings.border_radius}}px;
+    border:1px solid #2751A7;
+    text-align:center;
+  }
+
+  .product_tabs:hover{
+    cursor:pointer;
+    filter:brightness(115%);
+  }
+
+      @media only screen and (max-width: 600px) {
+  .tab_container{
+    margin: 3px auto;
+    margin-bottom:0px;
+    display:block;
+    padding-bottom:{{section.settings.border_padding}}px;
+    border-bottom:0px solid {{section.settings.border_color}};
+  }
+  .product_tabs{
+    margin-top:3px;
+    margin-right:2px;
+    padding:0 10px;
+    padding-top:4px;
+    padding-bottom:3px;
+    min-width:130px;
+    background-color: {{section.settings.background_color}};
+    color:{{section.settings.font_color}};
+    border-top-right-radius:0px;
+    border-top-left-radius:0px;
+    border:1px solid #2751A7;
+    text-align:center;
+  }
+}
+
+  {% endstyle %}
+
+{% endif %}
+
+
+{% schema %}
+{
+  "name": "Tabs",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_tabs",
+      "label": "Enable tabs",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Product page tabs",
+      "info": "When this section is enabled, the other sections will appear only when their assigned tab is selected."
+    },
+    {
+      "type": "color",
+      "id": "font_color",
+      "label": "Font color"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 25,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_padding",
+      "label": "Border padding",
+      "min": 0,
+      "max": 10,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_thickness",
+      "label": "Border width",
+      "min": 0,
+      "max": 10,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+       {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab name",
+          "default": "Tab Name"
+        }
+      ]
+       }
+  ],
+  "presets": [
+    {
+      "name": "Tabs",
+      "category": "Content",
+    "blocks": [
+       {
+      "type": "tab"
+       },
+       {
+      "type": "tab"
+       },
+       {
+      "type": "tab"
+       },
+       {
+      "type": "tab"
+       },
+       {
+      "type": "tab"
+       },
+       {
+      "type": "tab"
+       }
+      ]
+    }    
+
+  ]
+}
+
+{% endschema %}
+
+

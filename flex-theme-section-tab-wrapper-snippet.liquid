@@ -1,0 +1,20 @@
+<!--before opening "section" tag -->
+
+{% comment %} Product Tabs {% endcomment %}
+{% assign tab_label = section.settings.tab_label | remove:" " | downcase %}
+
+<div class="
+    section-{{section.id}}
+    tab tab-{{tab_label}}">
+
+{% style %}
+  .section-{{section.id}}{
+    padding-top: {{ section.settings.padding_top }}px !important;
+    padding-bottom: {{ section.settings.padding_bottom }}px !important;
+  }
+{% endstyle %}
+
+
+<!--right after the closing section tag, close the tab container with a closing div tag -->
+
+</div>
